@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat-deployment
+  labels:
+    type: appserver
+    author: jeevan
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      type: appserver
+  template:
+    metadata:
+      name: tomee-pod
+      labels:
+        type: appserver
+        author: jeevan
+    spec:
+      containers:
+        - name: mytomee
+          image: tomee
+          ports:
+            - containerPort: 8080
+              hostPort: 9090
+
+---

@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: ci-cd-pod
+  labels: 
+    type: ci
+    author: jeevan
+spec: 
+  containers: 
+    - name: myjenkins
+      image: jenkins/jenkins 
+...
+    

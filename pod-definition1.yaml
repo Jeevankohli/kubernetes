@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    type: proxy
+    author: jeevan
+spec:
+  containers:
+    - name: my-nginx
+      image: nginx
+...
+

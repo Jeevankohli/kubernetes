@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ngind-deployment
+  labels:
+    type: proxy
+    author: jeevan
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      type: proxy
+  template:
+    metadata:
+      name: nginx-pod
+      labels:
+        type: proxy
+        author: jeevan
+    spec:
+      containers:
+        - name: mynginx
+          image: jenkins/jenkins
+          ports:
+            - containerPort: 8080
+              hostPort: 8080
+...

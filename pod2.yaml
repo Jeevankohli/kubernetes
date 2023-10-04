@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: httpd-pod
+  labels:
+    type: webserver
+    author: jeevan
+spec:
+  containers:
+    - name: myhttpd
+      image: httpd
+
+
+

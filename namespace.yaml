@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata: 
+  name: test-ns
+---
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: tomee-pod
+  namespace: test-ns
+  labels: 
+    type: applicationserver
+    author: jeevan
+spec: 
+  containers: 
+    - name: mytomee
+      image: tomee
+...
+
