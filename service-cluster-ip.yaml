@@ -1,5 +1,5 @@
-if we wnat our pods to communicate with other pods and shouldnot communicate with external world  then we cluster ip thse type of service files are mainly used in databases
-cluster ip is called default service of kubernetes object if we dont give type = Clusterip it will give cluster ip because itv is the default service of kubernetes object
+if we wnat our pods to communicate with other pods and should not communicate with external world  then we use cluster ip these type of service files are mainly used in databases
+cluster ip is called default service of kubernetes object if we dont give type/tag = Clusterip it will give cluster ip because it is the default service of kubernetes object
 cluster ip prevernts you from communicating to the external world so no concept of "nodeport"  here
 
 
