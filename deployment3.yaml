@@ -20,5 +20,5 @@ spec:
     spec:
       containers:
         - name: myjenkins
-          image: jenkins
+          image: jenkins/jenkins
 ...
