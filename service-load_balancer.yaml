@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: service
+metadata: 
+  name:  nginx-service
+  labels: 
+    author: jeevan
+spec: 
+  type: LoadBalancer
+  ports: 
+    - targetport: 80
+      port: 80
+  selector: 
+    type: proxy
+    author: jeevan
+...
+
+we dont need to give nodeport automatically it will assign some port no greater than 30000 it will assign 
+and load balancer will work only for managed kubeernetes service it will work fo r unmanaged kubernetes services
+for the entire cluster it will assign an ip address and that ip address will be linked to the corresponding dns 
+tomorrow if we add more no of replicas we dont need to add those ... unique ip address will take care because it is linked to the dns
