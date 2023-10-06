@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: mynginx
-          image: jenkins/jenkins
+          image: nginx
           ports:
             - containerPort: 8080
               hostPort: 8080
