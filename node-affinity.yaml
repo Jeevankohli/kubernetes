@@ -1,0 +1,33 @@
+Node-Affinity: On a master machine there is a component called kube scheduller. It checks the hardware resources and decides where a particular pod should run. Its done entirely by the scheduller 
+We can take control of that and i should decide where a pod has to run this is called as Node-Affinity (affinity = Bonding) 
+
+-> kubectl get nodes
+-> copy any of the node
+-> kubectl label nodes {paste the copied node} slave1=jeevan
+                                                {key}={value}
+-> output  = node/copiednode has labeled
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    type: proxy
+    author: jeevan
+spec:
+  containers:
+    - name: mynginx
+      image: nginx
+      ports:
+        - containerPort: 80
+          hostPort: 8080
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: slave1
+                operator: In
+                values:
+                  - jeevan
+...
