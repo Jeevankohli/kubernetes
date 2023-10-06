@@ -1,0 +1,1 @@
+Node-taint: node taint will repel pods from a particular node/slave. Those pods will never run on the tainted nodes/slave they will run on other slaves
