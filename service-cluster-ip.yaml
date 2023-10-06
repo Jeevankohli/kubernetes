@@ -1,0 +1,20 @@
+if we wnat our pods to communicate with other pods and shouldnot communicate with external world  then we cluster ip thse type of service files are mainly used in databases
+cluster ip is called default service of kubernetes object if we dont give type = Clusterip it will give cluster ip because itv is the default service of kubernetes object
+cluster ip prevernts you from communicating to the external world so no concept of "nodeport"  here
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-app-service
+  labels:
+    author: jeevan
+spec:
+  ports:
+    - targetPort: 5432
+      port: 5432
+  selector:
+    type: db
+    author: jeevan
+...
