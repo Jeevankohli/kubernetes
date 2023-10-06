@@ -7,3 +7,36 @@ now taint remainig two nodes using the command
 -> kubectl apply -f node_taint.yaml
 now the pods will reamain on the pending status ... because we tainted all the machines
 now if we want to run pod on that tainted machines we use tolerations.
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd-deployment
+  labels:
+    type: webserver
+    author: jeevan
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      type: webserver
+  template:
+    metadata:
+      name: httpd-pod
+      labels:
+        type: webserver
+    spec:
+      containers:
+        - name: myhhtpd
+          image: httpd
+    tolerations:
+      - key: slave2
+        value: jeevan
+        effect: NoSchedule
+        operator: Equal
+...
+kubectl apply tolerations.yaml 
+kubectl get nodes -o wide
+now this httpd will create only 2pods they should be running on slave2
+kubectl descfribe nodes copy paste the slave2 | less
