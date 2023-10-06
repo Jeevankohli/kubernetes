@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ci-cd-deployment
+  labels:
+    type: ci-cd
+    author: jeevan
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      type: ci-cd
+  template:
+    metadata:
+      name: ci-cd-pod
+      labels:
+        type: ci-cd
+        author: jeevan
+    spec:
+      containers:
+        - name: myjenkins
+          image: jenkins
+...
