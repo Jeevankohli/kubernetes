@@ -1,1 +1,8 @@
 Node-taint: node taint will repel pods from a particular node/slave. Those pods will never run on the tainted nodes/slave they will run on other slaves
+-> kubectl get nodes
+-> copy any of the node
+along with key & value we need to specify something called as effect 
+-> kubectl taint nodes {paste the copied node} slave1=jeevan:NoSchedule
+                                                {key}={value}:{effect}
+-> output  = node/copiednode has tainted
+
