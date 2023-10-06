@@ -1,0 +1,9 @@
+Toleration: tolerations are applied at the level of pods. when the taint and tolerations match eachother pod will run on the tainted machine.
+----------
+now taint remainig two nodes using the command
+-> kubectl taint nodes {paste the copied node} slave1=jeevan:NoSchedule
+                                                {key}={value}:{effect}
+-> output  = node/copiednode has tainted
+-> kubectl apply -f node_taint.yaml
+now the pods will reamain on the pending status ... because we tainted all the machines
+now if we want to run pod on that tainted machines we use tolerations.
