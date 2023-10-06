@@ -40,7 +40,7 @@ spec:
                       - jeevan
 ...
 
-Node-Affinity to perform network load balancing we need to integrate with node-affinity deployment with service file so tthat we can acess our application through
+Node-Affinity to perform network load balancing we need to integrate node-affinity deployment with service file so tthat we can acess our application through
 other nodes
 
 ---
