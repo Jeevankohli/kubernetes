@@ -2,7 +2,61 @@ Node-taint: node taint will repel pods from a particular node/slave. Those pods 
 -> kubectl get nodes
 -> copy any of the node
 along with key & value we need to specify something called as effect 
+to taint a machine:
+--------------------
 -> kubectl taint nodes {paste the copied node} slave1=jeevan:NoSchedule
                                                 {key}={value}:{effect}
 -> output  = node/copiednode has tainted
+to untaint a machine:
+---------------------
+-> kubectl taint nodes {paste the copied node} slave1=jeevan:NoSchedule-
+                                                {key}={value}:{effect}
+-> output  = node/copiednode has untainted
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ci-cd-deployment
+  labels:
+    type: ci-cd
+    author: jeevan
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      type: ci-cd
+  template:
+    metadata:
+      name: ci-cd-pod
+      labels:
+        type: ci-cd
+        author: jeevan
+    spec:
+      containers:
+        - name: myjenkins
+          image: jenkins/jenkins
+...
+kubectl apply -f node_taint.yaml
+3 replicas of jenkins pod should be created based on the hardware are sufficient . If hardware resources are not sufficient the pods remain in pending status
+those pods will never run on tainted nodes.
+*Even if a pod is tainted it can acessable through loadbalancer & nodeport externally
+
+* If we craete a pod later we taint that pod what will happens?
+It will still on that pod it dosnt move to some other node/slave those pods will remain same further pods it will not allow to create on it.
+
+*what is the point of having slaves in kubernetes cluster and then tainting it( (not allowing pods to run on it)?
+What happens is in our oraganistaio  we have 100 slaves(these 100 for micro service architecture) out of that we have 5 slaves related to databases
+they run on sepraete machines they dont clutter with other components i dont want other load to come on those because database is critical so what we 
+do is we will taint those 5 machines once i tainted i create tomcat/nginx/httpd on those remaining 95 slaves they dont run on those 5 slaves because we already
+tainted. Now the database should run on the 5 tainted machine here the "tolerations" comes into picture 
+
+Toleration: tolerations are applied at the level of pods. when the taint and tolerations match eachother pod will run on the tainted machine.
+----------
+now taint remainig two nodes using the command
+-> kubectl taint nodes {paste the copied node} slave1=jeevan:NoSchedule
+                                                {key}={value}:{effect}
+-> output  = node/copiednode has tainted
+-> kubectl apply -f node_taint.yaml
+now the pods will reamain on the pending status ... because we tainted all the machines
+now if we want to run pod on that tainted machines we use tolerations see the "tolerations.yaml" file
 
