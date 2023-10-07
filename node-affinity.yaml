@@ -1,5 +1,5 @@
-Node-Affinity: On a master machine there is a component called kube scheduller. It checks the hardware resources and decides where a particular pod should run. Its done entirely by the scheduller 
-We can take control of that and i should decide where a pod has to run this is called as Node-Affinity (affinity = Bonding) 
+Node-Affinity: On a master machine there is a component called kube scheduller. It checks the hardware resources and decides where a particular pod should run.
+Its done entirely by the scheduller We can take control of that and i should decide where a pod has to run this is called as Node-Affinity (affinity = Bonding) 
 
 -> kubectl get nodes
 -> copy any of the node
