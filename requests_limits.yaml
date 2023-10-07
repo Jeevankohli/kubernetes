@@ -1,0 +1,29 @@
+Request: Is the minimum amount of hardware that is garunteed for a pod
+limits: This is the maximum amount of hardware that a pod can evevr use if the pod is asking for extra hardware
+resource it will not allow due to limit
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    type: proxy
+    author: jeevan
+spec:
+  containers:
+    - name: mynginx
+      image: nginx
+      resources:
+        requests:
+          memory: "64mi"
+          cpu: "250m"
+        limits:
+          memomy: "128mi"
+          cpu: "500m"
+...
+"mi" = mega bytes
+"m"  = mega hrz
+
+kubectl apply -f requests_limits.yaml
+kubectl get nodes
+kubectl describe pods nginx-pod | less
