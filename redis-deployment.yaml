@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-app-deployment
+  labels:
+    name: redis-app
+    author: jeevan
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: redis-app
+  template:
+    metadata:
+      name: redis-app-pod
+      labels:
+        name: redis-app
+    spec:
+      containers:
+        - name: myredis
+          image: redis
+          env:
+            - name: Master
+              valueFrom:
+                secretKeyRef:
+                  name: redis-secret
+                  key: a
+...
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-app-service
+  labels:
+    author: jeevan
+spec:
+  ports:
+    - targetPort: 6379
+      port: 6379
+  selector:
+    name: redis-app
+...
