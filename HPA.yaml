@@ -1,0 +1,53 @@
+Horizantal Pod Auto-scaller: HPA is a object of kubernetes which allows you to autoscale based on the c.p.u utilization i want to incerase the pods or decrease the pods automatically 
+--------------------------   truely based on response to the server.
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-apache
+  labels:
+    run: php-apache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: php-apache
+  template:
+    metadata:
+      name: php-apache
+      labels:
+        run: php-apache
+    spec:
+      containers:
+        - name: myapache
+          image: intelliqit/mynew
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 250m
+            limits:
+              cpu: 500m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-apache
+  labels:
+    run: php-apache
+spec:
+  ports:
+    - port: 80
+  selector:
+    run: php-apache
+...
+container port = target port alraedy exposed in deployment file
+no concept of nodeport we are using cluster ip 
+-> kubectl apply -f HPA.yaml
+it will craete both deployment and service file
+-> kubectl get all
+-> kubectl autoscale deployment php-apache --cpu-percent=50 --min=1 --max=10 
+-> kubectl get hpa
+
+  
