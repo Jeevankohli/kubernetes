@@ -1,0 +1,33 @@
+emptyDir volume: this is one kind of volume to preserve data & softwares
+---
+apiVersion: apps/v1
+kind: Pod
+metadata:
+  name: redis-pod
+  labels:
+    type: db
+    author: jeevan
+spec:
+  containers:
+    - name: myredis
+      image: redis
+      VolumeMounts:
+        - name: redis-volume
+          mountPath: /data/redis
+  volumes:
+    - name: redis-volume
+      emptyDir: {}
+...
+-> kubectl apply -f emptyDir.yaml
+-> kubectl get pods
+-> kubectl exec -it redis-pod --bash
+-> pwd
+-> ls
+-> cd redis
+-> cat > file1
+   accorfing to the definition file what ever the data preserved in the /data/redis that should be preserved even if the pod get deleted it will recraete the pod with the data
+-> kill 1
+
+
+
+  
