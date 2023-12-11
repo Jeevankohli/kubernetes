@@ -1,0 +1,95 @@
+presistant-volume:
+----------------------
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mypv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /mnt/data
+...
+kubectl apply -f presistant-volume.yaml
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReeaWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+...
+kubectl apply -f presistant-volume-cliam.yaml
+
+statefulset:-
+-----------
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  clusterIP: None
+  ports:
+    - name: tcp
+      protocol: TCP
+      port: 3306
+  selector:
+    app: mysql
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-statefulset
+  labels:
+    app: mysql
+    author: jeevan
+spec:
+  replicas: 2
+  serviceName: mysql
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      name: mysql-pod
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:5
+          ports:
+            - name: tcp
+              protocol: TCP
+              containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: jeevan
+          volumeMounts:
+            - name: mysql-volume
+              mountpath: /mysql/lib/mysql
+      volumes:
+        - name: mysql-volume
+          persistentVolumeClaim:
+          claimName: my-pvc
+...
+kubectl apply -f statefulset.yaml
+Application which are maintaing data are called statefulset application
+ In stateful sset if we create pods first it will create "pod0" which is known as 'master pod' and the next pod it creates is pod1 pod2 
+ similarly if we delete pods it will delete in the reverse order (backwards)
+ "Master-pod": It has the mechanism through which it checks what is the data present in each and every pod
